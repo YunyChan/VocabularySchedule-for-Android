@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tv_peroidTime"
+        android:layout_width="50px"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_peroid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <ImageButton
+        android:id="@+id/ibtn_editPeroid"
+        android:layout_width="70px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#00000000"
+        android:padding="10px"
+        android:src="@drawable/pen_32x32" />
+
+    <ImageButton
+        android:id="@+id/ibtn_deletePeroid"
+        android:layout_width="70px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#00000000"
+        android:padding="10px"
+        android:src="@drawable/trash_stroke_32x32" />
+
+</LinearLayout>

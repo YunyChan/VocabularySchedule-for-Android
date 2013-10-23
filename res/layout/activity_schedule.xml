@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScheduleActivity" >
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- 第一行工具栏 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/books_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/buttonBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="返回" />
+
+                <Button
+                    android:id="@+id/buttonChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="更改选中项" />
+            </LinearLayout>
+            <!-- 列表区域 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <ListView
+                        android:id="@+id/List_blank"
+                        android:layout_width="25px"
+                        android:layout_height="wrap_content" />
+
+                    <ListView
+                        android:id="@+id/List_taks_id"
+                        android:layout_width="25px"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <com.example.vocabularyschedule.SyncHorizontalScrollView
+                        android:id="@+id/hsv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <ListView
+                            android:id="@+id/ListTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </com.example.vocabularyschedule.SyncHorizontalScrollView>
+
+                    <com.example.vocabularyschedule.SyncHorizontalScrollView
+                        android:id="@+id/hsv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <ListView
+                            android:id="@+id/ListContant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </com.example.vocabularyschedule.SyncHorizontalScrollView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#111"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="3dp" />
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>

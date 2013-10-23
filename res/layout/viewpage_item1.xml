@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10px" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="书名(必填):"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_bookTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入书本名字"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10px"
+            android:background="#B8B8B8"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10px" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置计划表进度计量单位(必填):"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_unit1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10px" >
+
+            <RadioButton
+                android:id="@+id/rbtn_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="页"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/rbtn_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="耗时(分钟)"
+                android:textSize="15sp" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_unit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10px" >
+
+            <RadioButton
+                android:id="@+id/rbtn_vocabulary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="词汇量（个）"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/rbtn_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="List"
+                android:textSize="15sp" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_unit3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10px" >
+
+            <RadioButton
+                android:id="@+id/rbtn_chapter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="章"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/rbtn_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="其它"
+                android:textSize="15sp" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/et_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="其它单位请在此输入"
+            android:singleLine="true"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>
