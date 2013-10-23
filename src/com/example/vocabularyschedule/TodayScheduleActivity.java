@@ -46,7 +46,7 @@ public class TodayScheduleActivity extends Activity{
 		LVTodaySchedule=(ListView)findViewById(R.id.list_today_tasks);
 		LVTodaySchedule.setAdapter(myAdapter);
 		Log.i("setAdapter", String.valueOf(1));
-		mApp=(MainApp)getApplication();
+		mApp=(MainApp)getApplication();//≤‚ ‘
 		
 		myAdapter.ShowSchedule(0,mApp.booksTodayTasks);
 	}
