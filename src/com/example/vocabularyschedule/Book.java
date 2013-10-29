@@ -49,7 +49,7 @@ public class Book implements Serializable{
 		this.unitStr="ҳ";
 		this.perPartAvgPages=12;
 		this.perPageAvgWords=12;
-		this.reviewModeId=1;
+		this.reviewModeId=0;
 		
 		//1
 		gapPages=new Vector<Gap>();

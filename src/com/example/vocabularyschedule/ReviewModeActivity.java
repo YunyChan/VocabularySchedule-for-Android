@@ -272,7 +272,9 @@ public class ReviewModeActivity extends Activity{
 						Operating operating=new Operating(1,lv_peroids_adapter.getCount());
 						operatingSequence.add(operating);
 						String et_period_contant=et_period.getText().toString();
-						lv_peroids_adapter.AddNewPeriod(lv_peroids_adapter.getCount(),Integer.valueOf(Integer.parseInt(et_period_contant)));
+						Integer value=Integer.valueOf(Integer.parseInt(et_period_contant));
+						operating.value=value;
+						lv_peroids_adapter.AddNewPeriod(lv_peroids_adapter.getCount(),value);
 						arg0.dismiss();
 					}
 					
@@ -345,8 +347,9 @@ public class ReviewModeActivity extends Activity{
 			case 0:
 				curMode.periods.remove(operating.position);
 				break;
-			case 1:
-				curMode.periods.add(operating.position, operating.value);
+			case 1:			
+				//curMode.periods.add(operating.position, operating.value);
+				curMode.periods.add(operating.value);
 				break;
 			case 2:
 				curMode.periods.remove(operating.position);
@@ -409,7 +412,6 @@ public class ReviewModeActivity extends Activity{
 				holder = (ViewHolder) convertView.getTag();
 						
 			holder.tv_peroidTime.setText(String.valueOf(position+1)); 
-			Log.d("ReviewModeActivity-getView", ""+position);
 			holder.tv_peroid.setText(curShowList.get(position).toString());
 			
 			holder.ibtn_editPeroid.setOnClickListener(new OnClickListener() {
