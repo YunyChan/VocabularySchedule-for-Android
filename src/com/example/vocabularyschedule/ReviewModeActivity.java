@@ -86,7 +86,6 @@ public class ReviewModeActivity extends Activity{
 	}
 	
 	private void InitModesSpinner(){
-		isCancelSelect=false;
 		spn_modes_al=new ArrayList<String>();
 		spn_modes=(Spinner)findViewById(R.id.spn_modes);
 		ResetModesSpinnerAdapter();
@@ -120,19 +119,15 @@ public class ReviewModeActivity extends Activity{
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							isCancelSelect=true;
-							ChangeModeListView(modesIdVec.indexOf(curSelectedModeId));
+							SetAllOperatings();
+							ChangeModeListView(ItemSelectedPosition);
 							dialog.dismiss();
 						}
 						
 					});
 					builder.create().show();
-				}else{
-					if (!isCancelSelect)
-						ChangeModeListView(ItemSelectedPosition);
-					else
-						isCancelSelect=false;
-				}
+				}else
+					ChangeModeListView(ItemSelectedPosition);
 			}
 
 			@Override
@@ -322,13 +317,13 @@ public class ReviewModeActivity extends Activity{
 	private void CancelLastOperating() {
 		Operating lastOperating=operatingSequence.lastElement();
 		switch (lastOperating.operate) {
-		case 0:
+		case 0://É¾³ý
 			lv_peroids_adapter.AddNewPeriod(lastOperating.position, lastOperating.value);
 			break;
-		case 1:
+		case 1://Ìí¼Ó
 			lv_peroids_adapter.RemovePeriod(lastOperating.position);
 			break;
-		case 2:
+		case 2://ÐÞ¸Ä
 			lv_peroids_adapter.SetPeriod(lastOperating.position, lastOperating.value);
 			break;
 		default:
@@ -348,12 +343,13 @@ public class ReviewModeActivity extends Activity{
 				curMode.periods.remove(operating.position);
 				break;
 			case 1:			
-				//curMode.periods.add(operating.position, operating.value);
 				curMode.periods.add(operating.value);
 				break;
 			case 2:
+				Log.i("SetAllOperatings", ""+operating.position);
 				curMode.periods.remove(operating.position);
-				curMode.periods.add(operating.value);
+				Log.i("SetAllOperatings", ""+operating.value);
+				curMode.periods.add(operating.position,operating.value);
 				break;
 			default:
 				break;
@@ -439,8 +435,10 @@ public class ReviewModeActivity extends Activity{
 								Operating operating=new Operating(2,position,oldPeriod);
 								operatingSequence.add(operating);
 								String et_peroid_contant=et_peroid.getText().toString();
+								Integer value=Integer.valueOf(Integer.parseInt(et_peroid_contant));
+								operating.value=value;
 								curShowList.remove(position);
-								curShowList.add(position, Integer.valueOf(Integer.parseInt(et_peroid_contant)));
+								curShowList.add(position,value);
 								dialog.dismiss();
 								notifyDataSetChanged();
 							}
