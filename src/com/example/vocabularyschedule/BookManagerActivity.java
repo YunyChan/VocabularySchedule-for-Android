@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Vector;
 
 import android.R.integer;
 import android.app.Activity;
@@ -38,23 +39,54 @@ public class BookManagerActivity extends Activity{
 	BookManagerActivity mClass=this;
 	private MainApp mApp;
 	private ImageButton ibtn_deleteBook,ibtn_addBook;
-	private ImageButton ibtn_editStartDate;
-	private Spinner spn_books;
+	private ImageButton ibtn_editBookTitle,ibtn_editPerPageAvgWords,ibtn_editPerPartAvgPages,ibtn_editRange,ibtn_editStartDate,ibtn_editReviewMode,ibtn_editWeekPlans;
+	
+	Spinner spn_books;
 	ArrayList<String> spn_books_al;
 	ArrayAdapter<String> spn_books_adapter;
+	Vector<Integer> booksIdVec;//Value-ModeId
+	Integer curSelectedBookId;
+	
 	private Calendar bookStartDate;
+
+	private TextView tv_bookTitle,tv_partUnit;
+	private TextView tv_perPageAvgWords;
+	private TextView tv_perPartAvgPages_unit,tv_perPartAvgPages;
+	private TextView tv_rangeStart,tv_rangeStart_unit,tv_rangeEnd,tv_rangeEnd_unit;
 	private TextView tv_year,tv_month,tv_day;
+	private TextView tv_bookReviewMode;
+	private TextView tv_weekPlans;
+	
 	private Book book;
 		
-	private ExpandableListView explv_weekPlans;
-	private List<String> weekPlansGroupData;
-	private List<List<String>> weekPlansChildrenData;
-	private int explv_weekPlans_groupHeight;
+	//private ExpandableListView explv_weekPlans;
+	//private List<String> weekPlansGroupData;
+	//private List<List<String>> weekPlansChildrenData;
+	//private int explv_weekPlans_groupHeight;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_books_manager);
-		ibtn_addBook=(ImageButton)findViewById(R.id.ibtn_addBook);
+		
+		tv_year=(TextView)findViewById(R.id.tv_year);
+		tv_month=(TextView)findViewById(R.id.tv_month);
+		tv_day=(TextView)findViewById(R.id.tv_day);	
+		
+		mApp=(MainApp)getApplication();
+		InitBooksSpinner();
+		InitIbtnAddBook();
+		InitIbtnStartDate();
+		//InitWeekPlans();
+	}
+	
+	public void InitBooksSpinner(){
+		spn_books_al=new ArrayList<String>();
+		spn_books=(Spinner)findViewById(R.id.spn_books);
+		ResetBooksSpinnerAdapter();
+	}
+    
+    private void InitIbtnAddBook(){
+    	ibtn_addBook=(ImageButton)findViewById(R.id.ibtn_addBook);
 		ibtn_addBook.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -63,8 +95,14 @@ public class BookManagerActivity extends Activity{
 				startActivity(new Intent(mClass, AddBookActivity.class));
 			}
 		});
-		
-		ibtn_editStartDate=(ImageButton)findViewById(R.id.ibtn_editStartDate);
+    }
+    
+    private void InitIbtnDeleteBook(){
+    	
+    }
+    
+    private void InitIbtnStartDate(){  	
+    	ibtn_editStartDate=(ImageButton)findViewById(R.id.ibtn_editStartDate);
 		ibtn_editStartDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -75,31 +113,9 @@ public class BookManagerActivity extends Activity{
 						bookStartDate.get(Calendar.YEAR), bookStartDate.get(Calendar.MONTH), bookStartDate.get(Calendar.DAY_OF_MONTH)).show();
 			}
 		});
-		
-		tv_year=(TextView)findViewById(R.id.tv_year);
-		tv_month=(TextView)findViewById(R.id.tv_month);
-		tv_day=(TextView)findViewById(R.id.tv_day);	
-		
-		mApp=(MainApp)getApplication();
-		InitBooksSpinner();
-		InitWeekPlans();
-	}
-	
-	public void InitBooksSpinner(){
-		spn_books_al=new ArrayList<String>();
-		spn_books=(Spinner)findViewById(R.id.spn_books);
-		Enumeration<Book> boosEnu=mApp.books.elements();
-		while (boosEnu.hasMoreElements()) {
-			Book curBook = (Book) boosEnu.nextElement();
-			spn_books_al.add(curBook.title);
-		}
-		spn_books_adapter=new
-				ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spn_books_al);
-		spn_books_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spn_books.setAdapter(spn_books_adapter);
-	}
-	
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    }
+    
+	DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 		@Override
 		public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
@@ -113,6 +129,27 @@ public class BookManagerActivity extends Activity{
 		}
     };
     
+    private void ResetBooksSpinnerAdapter(){
+    	booksIdVec=new Vector<Integer>();
+    	Enumeration<Book> boosEnu=mApp.books.elements();
+		while (boosEnu.hasMoreElements()) {
+			Book curBook = (Book) boosEnu.nextElement();
+			spn_books_al.add(curBook.title);
+			booksIdVec.add(Integer.valueOf(curBook.id));
+		}
+		spn_books_adapter=new
+				ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spn_books_al);
+		spn_books_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spn_books.setAdapter(spn_books_adapter);
+    }
+    
+    private void ShowBookInformation(){
+    	curSelectedBookId=booksIdVec.elementAt(spn_books.getSelectedItemPosition());
+    	Book curSelectedBook=mApp.books.get(Integer.valueOf(curSelectedBookId));
+    	
+    }
+    
+    /*
     private void InitWeekPlans() {
     	explv_weekPlans=(ExpandableListView)findViewById(R.id.explv_weekPlans);
     	book=mApp.books.get(Integer.valueOf(1));
@@ -286,4 +323,5 @@ public class BookManagerActivity extends Activity{
 		}
     	
     }
+    */
 }

@@ -49,7 +49,6 @@ public class ReviewModeActivity extends Activity{
 	ArrayAdapter<String> spn_modes_adapter;
 	Vector<Integer> modesIdVec;//Value-ModeId
 	Integer curSelectedModeId;
-	boolean isCancelSelect;
 	
 	//-2代表新增,-1代表删除，>0代表修改
 	private Vector<Operating> operatingSequence;

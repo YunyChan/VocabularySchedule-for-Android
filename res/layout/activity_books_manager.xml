@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:fillViewport="true" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
 
                 <Spinner
                     android:id="@+id/spn_books"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -67,7 +68,7 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -81,7 +82,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/tv_title"
+                        android:id="@+id/tv_bookTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|left"
@@ -91,7 +92,7 @@
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/ibtn_editTitle"
+                    android:id="@+id/ibtn_editBookTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -124,7 +125,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/partunit"
+                android:id="@+id/tv_partUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|left"
@@ -153,7 +154,7 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -207,7 +208,7 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -281,7 +282,7 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -372,7 +373,7 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -468,13 +469,13 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|left"
                         android:paddingBottom="3px"
@@ -482,7 +483,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/tv_reviewMode"
+                        android:id="@+id/tv_bookReviewMode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|left"
@@ -508,23 +509,77 @@
                 android:visibility="visible" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10px"
+            android:paddingLeft="10px"
+            android:paddingRight="10px" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|left"
+                        android:paddingBottom="3px"
+                        android:text="周进度计划表:"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_weekPlans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|left"
+                        android:paddingBottom="10px"
+                        android:text=" "
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/ibtn_editWeekPlans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5px"
+                android:background="#B8B8B8"
+                android:visibility="visible" />
+        </LinearLayout>
+        
         <ExpandableListView
             android:id="@+id/explv_weekPlans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:paddingBottom="10px"
             android:paddingLeft="10px"
-            android:paddingRight="10px" />
+            android:paddingRight="10px" 
+            android:layout_weight="1"/>
 
         <ExpandableListView
             android:id="@+id/explv_gapPages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:paddingBottom="10px"
             android:paddingLeft="10px"
-            android:paddingRight="10px" />
+            android:paddingRight="10px" 
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </ScrollView>
