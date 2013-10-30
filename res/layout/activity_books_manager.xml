@@ -25,20 +25,25 @@
                     android:id="@+id/spn_books"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
                     android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/btn_delete"
+                <ImageButton
+                    android:id="@+id/ibtn_deleteBook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Delete" />
+                    android:src="@drawable/trash_stroke_32x32" 
+                    android:layout_gravity="center"
+                    android:background="#00000000"
+                    android:padding="10px"/>
 
-                <Button
-                    android:id="@+id/btn_add"
+                <ImageButton
+                    android:id="@+id/ibtn_addBook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add" />
+                    android:src="@drawable/plus_32x32"
+                    android:layout_gravity="center"
+                    android:background="#00000000"
+                    android:padding="10px"/>
             </LinearLayout>
 
             <View
@@ -85,11 +90,14 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_title"
+                <ImageButton
+                    android:id="@+id/ibtn_editTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32" />
             </LinearLayout>
 
             <View
@@ -168,11 +176,14 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_perPageAvgWords"
+                <ImageButton
+                    android:id="@+id/ibtn_editPerPageAvgWords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32"/>
             </LinearLayout>
 
             <View
@@ -239,11 +250,14 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_perPartAvgPages"
+                <ImageButton
+                    android:id="@+id/ibtn_editPerPartAvgPages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32"/>
             </LinearLayout>
 
             <View
@@ -327,11 +341,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_range"
+                <ImageButton
+                    android:id="@+id/ibtn_editRange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32" />
             </LinearLayout>
 
             <View
@@ -420,11 +437,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_startDate"
+                <ImageButton
+                    android:id="@+id/ibtn_editStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32" />
             </LinearLayout>
 
             <View
@@ -471,11 +491,14 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_edit_reviewMode"
+                <ImageButton
+                    android:id="@+id/ibtn_editReviewMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit" />
+                    android:layout_gravity="center"
+	                android:background="#00000000"
+	                android:padding="10px"
+	                android:src="@drawable/pen_32x32" />
             </LinearLayout>
 
             <View

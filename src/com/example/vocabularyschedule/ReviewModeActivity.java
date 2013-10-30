@@ -2,7 +2,6 @@ package com.example.vocabularyschedule;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -14,21 +13,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,8 +35,8 @@ public class ReviewModeActivity extends Activity{
 	private MainApp mApp;
 	
 	TextView tv_modeName;
-	ImageButton ibtn_deleteMode,ibtn_addMode;
-	ImageButton ibtn_reset,ibtn_addPeriod,ibtn_save,ibtn_editModeName,ibtn_undo;
+	ImageButton ibtn_deleteMode,ibtn_addMode,ibtn_editModeName;
+	Button btn_reset,btn_addPeriod,btn_save,btn_undo;
 	
 	//
 	ListView lv_periods;
@@ -79,10 +75,10 @@ public class ReviewModeActivity extends Activity{
 		InitIbtnAddMode();
 		InitIbtnDeleteMode();	
 		InitIbtnEditModeName();
-		InitIbtnUndo();
-		InitIbtnReset();
-		InitIbtnAddPeriod();
-		InitIbtnSave();
+		InitBtnUndo();
+		InitBtnReset();
+		InitBtnAddPeriod();
+		InitBtnSave();
 	}
 	
 	private void InitModesSpinner(){
@@ -218,10 +214,10 @@ public class ReviewModeActivity extends Activity{
 		});
 	}
 	
-	private void InitIbtnUndo() {
+	private void InitBtnUndo() {
 		
-		ibtn_undo=(ImageButton)findViewById(R.id.ibtn_undo);
-		ibtn_undo.setOnClickListener(new OnClickListener() {
+		btn_undo=(Button)findViewById(R.id.btn_undo);
+		btn_undo.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -232,9 +228,9 @@ public class ReviewModeActivity extends Activity{
 		});
 	}
 	
-	private void InitIbtnReset() {
-		ibtn_reset=(ImageButton)findViewById(R.id.ibtn_reset);
-		ibtn_reset.setOnClickListener(new OnClickListener() {
+	private void InitBtnReset() {
+		btn_reset=(Button)findViewById(R.id.btn_reset);
+		btn_reset.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -245,9 +241,9 @@ public class ReviewModeActivity extends Activity{
 		});
 	}
 	
-	private void InitIbtnAddPeriod() {
-		ibtn_addPeriod=(ImageButton)findViewById(R.id.ibtn_addPeriod);
-		ibtn_addPeriod.setOnClickListener(new OnClickListener() {
+	private void InitBtnAddPeriod() {
+		btn_addPeriod=(Button)findViewById(R.id.btn_addPeriod);
+		btn_addPeriod.setOnClickListener(new OnClickListener() {
 			EditText et_period;
 			@Override
 			public void onClick(View arg0) {
@@ -288,9 +284,9 @@ public class ReviewModeActivity extends Activity{
 		});
 	}
 	
-	private void InitIbtnSave() {
-		ibtn_save=(ImageButton)findViewById(R.id.ibtn_save);
-		ibtn_save.setOnClickListener(new OnClickListener() {
+	private void InitBtnSave() {
+		btn_save=(Button)findViewById(R.id.btn_save);
+		btn_save.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -346,9 +342,7 @@ public class ReviewModeActivity extends Activity{
 				curMode.periods.add(operating.value);
 				break;
 			case 2:
-				Log.i("SetAllOperatings", ""+operating.position);
 				curMode.periods.remove(operating.position);
-				Log.i("SetAllOperatings", ""+operating.value);
 				curMode.periods.add(operating.position,operating.value);
 				break;
 			default:

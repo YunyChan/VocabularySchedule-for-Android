@@ -28,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
@@ -36,8 +37,8 @@ import android.widget.TextView;
 public class BookManagerActivity extends Activity{
 	BookManagerActivity mClass=this;
 	private MainApp mApp;
-	private Button btn_add;
-	private Button btn_edit_startDate;
+	private ImageButton ibtn_deleteBook,ibtn_addBook;
+	private ImageButton ibtn_editStartDate;
 	private Spinner spn_books;
 	ArrayList<String> spn_books_al;
 	ArrayAdapter<String> spn_books_adapter;
@@ -53,8 +54,8 @@ public class BookManagerActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_books_manager);
-		btn_add=(Button)findViewById(R.id.btn_add);
-		btn_add.setOnClickListener(new OnClickListener() {
+		ibtn_addBook=(ImageButton)findViewById(R.id.ibtn_addBook);
+		ibtn_addBook.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -63,8 +64,8 @@ public class BookManagerActivity extends Activity{
 			}
 		});
 		
-		btn_edit_startDate=(Button)findViewById(R.id.btn_edit_startDate);
-		btn_edit_startDate.setOnClickListener(new OnClickListener() {
+		ibtn_editStartDate=(ImageButton)findViewById(R.id.ibtn_editStartDate);
+		ibtn_editStartDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
