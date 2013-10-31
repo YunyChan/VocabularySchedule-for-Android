@@ -68,10 +68,6 @@ public class BookManagerActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_books_manager);
 		
-		tv_year=(TextView)findViewById(R.id.tv_year);
-		tv_month=(TextView)findViewById(R.id.tv_month);
-		tv_day=(TextView)findViewById(R.id.tv_day);	
-		
 		mApp=(MainApp)getApplication();
 		InitBooksSpinner();
 		InitIbtnAddBook();
@@ -98,6 +94,7 @@ public class BookManagerActivity extends Activity{
     }
     
     private void InitIbtnDeleteBook(){
+    	curSelectedBookId=booksIdVec.elementAt(spn_books.getSelectedItemPosition());
     	
     }
     
@@ -114,6 +111,27 @@ public class BookManagerActivity extends Activity{
 			}
 		});
     }
+    
+    private void InitBookInformationTextView() {
+    	tv_bookTitle=(TextView)findViewById(R.id.tv_bookTitle);
+    	
+    	tv_partUnit=(TextView)findViewById(R.id.tv_partUnit);
+    	
+    	tv_perPageAvgWords=(TextView)findViewById(R.id.tv_perPageAvgWords);
+    	
+    	tv_perPartAvgPages_unit=(TextView)findViewById(R.id.tv_perPartAvgPages_unit);
+    	tv_perPartAvgPages=(TextView)findViewById(R.id.tv_perPartAvgPages);   	
+    	
+    	tv_bookReviewMode=(TextView)findViewById(R.id.tv_bookReviewMode);  
+    	
+    	tv_weekPlans=(TextView)findViewById(R.id.tv_weekPlans); 
+    	
+    	tv_year=(TextView)findViewById(R.id.tv_year);
+		tv_month=(TextView)findViewById(R.id.tv_month);
+		tv_day=(TextView)findViewById(R.id.tv_day);	
+		
+		
+	}
     
 	DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -146,7 +164,9 @@ public class BookManagerActivity extends Activity{
     private void ShowBookInformation(){
     	curSelectedBookId=booksIdVec.elementAt(spn_books.getSelectedItemPosition());
     	Book curSelectedBook=mApp.books.get(Integer.valueOf(curSelectedBookId));
-    	
+    	tv_bookTitle.setText(curSelectedBook.title);
+    	tv_partUnit.setText(curSelectedBook.unitStr);
+    	tv_perPageAvgWords.setText(String.valueOf(curSelectedBook.perPageAvgWords));
     }
     
     /*
