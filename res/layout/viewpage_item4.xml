@@ -12,18 +12,18 @@
 		android:textSize="15sp"
 		android:drawableLeft="@drawable/check_32x26"
 		android:background="#00000000"/>
-	<LinearLayout
-	    android:id="@+id/lly_gaps"
+	<RadioButton
+	    android:id="@+id/rbtn_setGaps"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="设置间隔页（可选）："
+	    android:textSize="20sp" />	
+	    <LinearLayout
+	    android:id="@+id/llyt_gaps"
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="1"
 	    android:orientation="vertical" >	
-	    <RadioButton
-	        android:id="@+id/rbtn_setGaps"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="设置间隔页（可选）："
-	        android:textSize="20sp" />	
 	    <TextView
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"

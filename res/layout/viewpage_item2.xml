@@ -10,21 +10,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10px" >
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="平均每页单词数(必填):"
             android:textSize="20sp" />
-
         <EditText
-            android:id="@+id/addbook_PerPageAvgWords"
+            android:id="@+id/et_perPageAvgWords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="输入粗略估计即可"
             android:singleLine="true"
             android:textSize="15sp" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -34,51 +31,44 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lly_perPartAvgPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10px" >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="平均每"
                 android:textSize="20sp" />
-
             <TextView
-                android:id="@+id/addbook_PerPartAvgPage_text1"
+                android:id="@+id/tv_perPartAvgPages_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:textSize="20sp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="页数"
                 android:textSize="20sp" />
-
             <TextView
-                android:id="@+id/addbook_PerPartAvgPage_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(必填):"
                 android:textSize="20sp" />
         </LinearLayout>
-
         <EditText
-            android:id="@+id/addbook_PerPartAvgPage"
+            android:id="@+id/et_perPartAvgPages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="输入粗略估计即可"
             android:singleLine="true"
             android:textSize="15sp" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -92,51 +82,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10px" >
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="背诵范围:"
             android:textSize="20sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
             <EditText
-                android:id="@+id/addbook_start"
+                android:id="@+id/et_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="起始"
                 android:singleLine="true"
                 android:textSize="15sp" />
-
             <TextView
-                android:id="@+id/addbook_range_unit1"
+                android:id="@+id/tv_rangeStartUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="页"
                 android:textSize="15sp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="~"
                 android:textSize="15sp" />
-
             <EditText
-                android:id="@+id/addbook_end"
+                android:id="@+id/et_end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="结束"
                 android:singleLine="true"
                 android:textSize="15sp" />
-
             <TextView
-                android:id="@+id/addbook_range_unit2"
+                android:id="@+id/tv_rangeEndUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="页"
@@ -156,20 +139,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10px" >
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置背诵起始日期(必填):"
             android:textSize="20sp" />
-
         <Button
-            android:id="@+id/addbook_start_date"
+            android:id="@+id/btn_startDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="点击设置"
             android:textSize="20sp" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -183,17 +163,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10px" >
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置复习模式(必填):"
             android:textSize="20sp" />
-
         <Spinner
+            android:id="@+id/spn_reviewMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

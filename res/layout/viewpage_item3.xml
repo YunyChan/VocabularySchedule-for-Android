@@ -8,216 +8,185 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10px" >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="设置每周各天背新单词计划(必填):"
                 android:textSize="20sp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10px"
                 android:text="说明:0代表当天不背新单词。"
                 android:textSize="12sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期一:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_monday"
+                    android:id="@+id/et_monday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit1"
+                    android:id="@+id/tv_mondayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期二:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_tuesday"
+                    android:id="@+id/et_tuesday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit2"
+                    android:id="@+id/tv_tuesdayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期三:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_wednesday"
+                    android:id="@+id/et_wednesday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit3"
+                    android:id="@+id/tv_wednesdayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期四:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_thursday"
+                    android:id="@+id/et_thursday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit4"
+                    android:id="@+id/tv_thursdayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期五:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_friday"
+                    android:id="@+id/et_friday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit5"
+                    android:id="@+id/tv_fridayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期六:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_saturday"
+                    android:id="@+id/et_saturday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit6"
+                    android:id="@+id/tv_saturdayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
                     android:textSize="15sp" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10px" >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期日:"
                     android:textSize="15sp" />
-
                 <EditText
-                    android:id="@+id/addbook_sunday"
+                    android:id="@+id/et_sunday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=""
                     android:singleLine="true" />
-
                 <TextView
-                    android:id="@+id/addbook_weekplan_unit7"
+                    android:id="@+id/tv_sundayUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="页"
