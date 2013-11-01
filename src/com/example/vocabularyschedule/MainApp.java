@@ -1,13 +1,16 @@
 package com.example.vocabularyschedule;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 public class MainApp extends Application{
 	Hashtable<Integer, Book> books;
@@ -16,6 +19,9 @@ public class MainApp extends Application{
 	
 	Hashtable<Integer, Hashtable<String, Vector<Task>>> schedules;
 	Hashtable<Integer, Vector<Task>> booksTodayTasks;
+	
+	ArrayList<String> spn_modes_al=new ArrayList<String>();
+	Vector<Integer> modesIdVec;//Value-ModeId
 	
 	@Override
 	public void onCreate() {
@@ -52,6 +58,9 @@ public class MainApp extends Application{
 		GetAllBookTodayTask();
 		//当当天没有
 		//Log.e("Schedule", String.valueOf(booksTodayTasks.get(Integer.valueOf(1)).size()));
+		
+		modesIdVec=new Vector<Integer>();
+		ResetModesSpinnerData();
 	}
 	
 	void GetBookSchedule(int bookId){
@@ -229,6 +238,17 @@ public class MainApp extends Application{
 		default:
 			result=doubleLength*doublePerPartAvgPages*doublePerPageAvgWords;
 			return (int)result;
+		}
+	}
+	
+	void ResetModesSpinnerData(){
+		modesIdVec.clear();
+		spn_modes_al.clear();
+		Enumeration<ReviewMode> modesEnu=modes.elements();
+		while (modesEnu.hasMoreElements()) {
+			ReviewMode curMode = (ReviewMode) modesEnu.nextElement();
+			spn_modes_al.add(curMode.name);
+			modesIdVec.add(Integer.valueOf(curMode.id));
 		}
 	}
 }

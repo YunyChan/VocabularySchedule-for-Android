@@ -1,9 +1,11 @@
 package com.example.vocabularyschedule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -13,14 +15,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +39,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class AddBookActivity extends Activity{
+	AddBookActivity activity=this;
+	private MainApp mApp;
+	
 	//滑动页面	
 	private ViewPager vp_addBook;//页卡内容
     private List<View> listViews; // Tab页面列表
@@ -48,7 +58,7 @@ public class AddBookActivity extends Activity{
     RadioGroup rg_unit1,rg_unit2,rg_unit3;
     RadioButton rbtn_page,rbtn_cost,rbtn_vocabulary,rbtn_list,rbtn_chapter,rbtn_other;
     private Boolean HasLockedGroup = false;
-    public int curUnitSelect;
+    int curUnitSelect;
     EditText et_other,et_bookTitle;
     
     //步骤2
@@ -57,6 +67,8 @@ public class AddBookActivity extends Activity{
     LinearLayout lly_perPartAvgPage;
     Button btn_startDate;
     Spinner spn_reviewMode;
+    private Calendar bookStartDate;
+    ArrayAdapter<String> spn_modes_adapter;
     
     //步骤3
     EditText et_monday,et_tuesday,et_wednesday,et_thursday,et_friday,et_saturday,et_sunday;
@@ -64,7 +76,7 @@ public class AddBookActivity extends Activity{
     
     //步骤4
     Button btn_finish,btn_addGap,btn_undo;
-    RadioButton rbtn_setGaps;
+    CheckBox cb_setGaps;
     LinearLayout llyt_gaps;
     ListView lv_gaps;
     
@@ -73,6 +85,8 @@ public class AddBookActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addbook);
+		mApp=(MainApp)getApplication();
+		
 		InitImageView();
 		InitTextView();
 		InitViewPager();
@@ -140,6 +154,8 @@ public class AddBookActivity extends Activity{
         rg_unit3=(RadioGroup)curView.findViewById(R.id.rg_unit3);
         rg_unit3.setOnCheckedChangeListener(new
         		UnitRadioGroupOnCheckedChangeListener());
+        
+        curUnitSelect=-1;
         
         rbtn_page=(RadioButton)curView.findViewById(R.id.rbtn_page);
         rbtn_page.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -255,16 +271,39 @@ public class AddBookActivity extends Activity{
     private void InitStepTwo() {
     	LayoutInflater mInflater = getLayoutInflater();
     	View curView=mInflater.inflate(R.layout.viewpage_item2, null);
+    	
     	et_perPageAvgWords=(EditText)curView.findViewById(R.id.et_perPageAvgWords);
+    	et_perPageAvgWords.setKeyListener(new DigitsKeyListener(false,true));
+    	
     	lly_perPartAvgPage=(LinearLayout)curView.findViewById(R.id.lly_perPartAvgPage);
     	tv_perPartAvgPages_unit=(TextView)curView.findViewById(R.id.tv_perPartAvgPages_unit);
     	et_perPartAvgPages=(EditText)curView.findViewById(R.id.et_perPartAvgPages);
+    	et_perPartAvgPages.setKeyListener(new DigitsKeyListener(false,true));
+    	
     	et_start=(EditText)curView.findViewById(R.id.et_start);
+    	et_start.setKeyListener(new DigitsKeyListener(false,true));
     	et_end=(EditText)curView.findViewById(R.id.et_end);
+    	et_end.setKeyListener(new DigitsKeyListener(false,true));
     	tv_rangeStartUnit=(TextView)curView.findViewById(R.id.tv_rangeStartUnit);
     	tv_rangeEndUnit=(TextView)curView.findViewById(R.id.tv_rangeEndUnit);
+    	
     	btn_startDate=(Button)curView.findViewById(R.id.btn_startDate);
+    	btn_startDate.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				bookStartDate=Calendar.getInstance();
+				new DatePickerDialog(activity,DateSetListener,
+						bookStartDate.get(Calendar.YEAR), bookStartDate.get(Calendar.MONTH), bookStartDate.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+    	
     	spn_reviewMode=(Spinner)curView.findViewById(R.id.spn_reviewMode);
+    	spn_modes_adapter=new
+				ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
+		spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    	spn_reviewMode.setAdapter(spn_modes_adapter);
     	
         listViews.add(curView);
 	}
@@ -279,6 +318,14 @@ public class AddBookActivity extends Activity{
     	et_friday=(EditText)curView.findViewById(R.id.et_friday);
     	et_saturday=(EditText)curView.findViewById(R.id.et_saturday);
     	et_sunday=(EditText)curView.findViewById(R.id.et_sunday);
+    	
+    	et_monday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_tuesday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_wednesday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_thursday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_friday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_saturday.setKeyListener(new DigitsKeyListener(false,true));
+    	et_sunday.setKeyListener(new DigitsKeyListener(false,true));
     	
     	tv_mondayUnit=(TextView)curView.findViewById(R.id.tv_mondayUnit);
     	tv_tuesdayUnit=(TextView)curView.findViewById(R.id.tv_tuesdayUnit);
@@ -295,12 +342,24 @@ public class AddBookActivity extends Activity{
     	LayoutInflater mInflater = getLayoutInflater();
     	View curView=mInflater.inflate(R.layout.viewpage_item4, null);
     	btn_finish=(Button)curView.findViewById(R.id.btn_finish);
+    	
+    	llyt_gaps=(LinearLayout)curView.findViewById(R.id.llyt_gaps);
+    	
     	btn_addGap=(Button)curView.findViewById(R.id.btn_addGap);
     	btn_undo=(Button)curView.findViewById(R.id.btn_undo);
     	
-    	rbtn_setGaps=(RadioButton)curView.findViewById(R.id.rbtn_setGaps);
-    	
-    	llyt_gaps=(LinearLayout)curView.findViewById(R.id.llyt_gaps);
+    	cb_setGaps=(CheckBox)curView.findViewById(R.id.cb_setGaps);
+    	cb_setGaps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked)
+					llyt_gaps.setVisibility(View.VISIBLE);
+				else
+					llyt_gaps.setVisibility(View.GONE);		
+			}
+		});
     	
         listViews.add(curView);
 	}
@@ -332,7 +391,26 @@ public class AddBookActivity extends Activity{
         vp_addBook.setAdapter(new MyPagerAdapter(listViews));
         vp_addBook.setCurrentItem(0);
         vp_addBook.setOnPageChangeListener(new MyOnPageChangeListener());
+        
+        rbtn_page.setChecked(true);
+        llyt_gaps.setVisibility(View.GONE);
     }
+    
+    DatePickerDialog.OnDateSetListener DateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+		@Override
+		public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+			// TODO Auto-generated method stub
+			bookStartDate.set(Calendar.YEAR, arg1);
+			bookStartDate.set(Calendar.MONTH, arg2);
+			bookStartDate.set(Calendar.DAY_OF_MONTH, arg3);
+			String dateStr="";
+			dateStr+=String.valueOf(arg1)+"-";
+			dateStr+=String.valueOf(arg2+1)+"-";
+			dateStr+=String.valueOf(arg3);
+			btn_startDate.setText(dateStr);
+		}
+    };
     
     /**
      * ViewPager适配器

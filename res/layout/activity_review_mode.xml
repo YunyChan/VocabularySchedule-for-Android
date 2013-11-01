@@ -20,7 +20,7 @@
                 android:id="@+id/spn_modes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/ibtn_deleteMode"

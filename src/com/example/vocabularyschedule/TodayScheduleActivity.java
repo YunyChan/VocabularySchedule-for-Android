@@ -114,7 +114,7 @@ public class TodayScheduleActivity extends Activity{
 				
 				Button btn_finish=(Button)linearLayout.findViewById(R.id.btn_finish);
 				viewArray[cnt]=linearLayout;
-				btn_finish.setOnClickListener(mBuyButtonClickListener);
+				btn_finish.setOnClickListener(finishButtonClickListener);
 			}
 		}	
 		
@@ -140,7 +140,7 @@ public class TodayScheduleActivity extends Activity{
 			notifyDataSetChanged();
 		}
 		
-		private OnClickListener mBuyButtonClickListener = new OnClickListener() {
+		private OnClickListener finishButtonClickListener = new OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 		        final int position = LVTodaySchedule.getPositionForView(v);

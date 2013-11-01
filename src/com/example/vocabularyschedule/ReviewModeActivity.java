@@ -45,9 +45,7 @@ public class ReviewModeActivity extends Activity{
 	
 	//spn_books所使用的变量
 	Spinner spn_modes;
-	ArrayList<String> spn_modes_al;
 	ArrayAdapter<String> spn_modes_adapter;
-	Vector<Integer> modesIdVec;//Value-ModeId
 	Integer curSelectedModeId;
 	
 	//-2代表新增,-1代表删除，>0代表修改
@@ -81,9 +79,12 @@ public class ReviewModeActivity extends Activity{
 	}
 	
 	private void InitModesSpinner(){
-		spn_modes_al=new ArrayList<String>();
 		spn_modes=(Spinner)findViewById(R.id.spn_modes);
-		ResetModesSpinnerAdapter();
+		mApp.ResetModesSpinnerData();
+		spn_modes_adapter=new
+				ArrayAdapter<String>(activityContext,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
+		spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spn_modes.setAdapter(spn_modes_adapter);
 		spn_modes.setOnItemSelectedListener(new OnItemSelectedListener() {
 			int ItemSelectedPosition;
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -147,7 +148,7 @@ public class ReviewModeActivity extends Activity{
 						spn_modes.setSelection(newModeSpinnerIndex);
 						curSelectedModeId=Integer.valueOf(newId);
 						mApp.modes.put(curSelectedModeId, newMode);
-						modesIdVec.add(curSelectedModeId);
+						mApp.modesIdVec.add(curSelectedModeId);
 					}
 				});
 	}
@@ -163,7 +164,11 @@ public class ReviewModeActivity extends Activity{
 						if(totalSelectedBooks==0){
 							mApp.modes.remove(curSelectedModeId);
 							spn_modes_adapter.clear();
-							ResetModesSpinnerAdapter();
+							mApp.ResetModesSpinnerData();
+							spn_modes_adapter=new
+									ArrayAdapter<String>(activityContext,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
+							spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+							spn_modes.setAdapter(spn_modes_adapter);
 						}else
 							Toast.makeText(getApplicationContext(),"还有"+totalSelectedBooks+"本书占用该模式",Toast.LENGTH_SHORT).show();
 					}
@@ -193,7 +198,7 @@ public class ReviewModeActivity extends Activity{
 						tv_modeName.setText(newModeName);
 						int curSpinnerIndex=spn_modes.getSelectedItemPosition();
 						spn_modes_adapter.clear();
-						ResetModesSpinnerAdapter();
+						mApp.ResetModesSpinnerData();
 						spn_modes.setSelection(curSpinnerIndex);
 						arg0.dismiss();
 					}
@@ -295,20 +300,6 @@ public class ReviewModeActivity extends Activity{
 		});
 	}
 	
-	private void ResetModesSpinnerAdapter(){
-		modesIdVec=new Vector<Integer>();
-		Enumeration<ReviewMode> modesEnu=mApp.modes.elements();
-		while (modesEnu.hasMoreElements()) {
-			ReviewMode curMode = (ReviewMode) modesEnu.nextElement();
-			spn_modes_al.add(curMode.name);
-			modesIdVec.add(Integer.valueOf(curMode.id));
-		}
-		spn_modes_adapter=new
-				ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spn_modes_al);
-		spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spn_modes.setAdapter(spn_modes_adapter);
-	}
-	
 	private void CancelLastOperating() {
 		Operating lastOperating=operatingSequence.lastElement();
 		switch (lastOperating.operate) {
@@ -352,7 +343,7 @@ public class ReviewModeActivity extends Activity{
 	}
 	
 	private void ChangeModeListView(int spinnerSelection) {
-		curSelectedModeId=modesIdVec.elementAt(spinnerSelection);				
+		curSelectedModeId=mApp.modesIdVec.elementAt(spinnerSelection);				
 		ReviewMode curMode=mApp.modes.get(curSelectedModeId);
 		tv_modeName.setText(curMode.name);
 		lv_peroids_adapter.SetData(curMode);
