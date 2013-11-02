@@ -19,7 +19,7 @@
 		android:text="设置间隔页（可选）："
 		android:textSize="20sp" />
 	<LinearLayout
-	    android:id="@+id/llyt_gaps"
+	    android:id="@+id/llyt_gapPages"
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="1"
@@ -58,32 +58,17 @@
 	            android:text="操作 " />
 	    </LinearLayout>    
 	    <ListView 
-	        android:id="@+id/lv_gaps"
+	        android:id="@+id/lv_gapPages"
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="1"/>
-	    <LinearLayout
+	    <Button
+	        android:id="@+id/btn_addGap"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
-	        <Button
-	            android:id="@+id/btn_addGap"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="添加间隔" 
-	            android:drawableLeft="@drawable/plus_32x32"
-	            android:textSize="15sp"
-	            android:background="#00000000"/>	
-	        <Button
-	            android:id="@+id/btn_undo"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="撤销上步"
-	            android:drawableLeft="@drawable/undo_32x32"
-	            android:textSize="15sp"
-	            android:background="#00000000" />	
-	    </LinearLayout>
+	        android:text="添加间隔" 
+	        android:drawableLeft="@drawable/plus_32x32"
+	        android:textSize="15sp"
+	        android:background="#00000000"/>	
     </LinearLayout>
 </LinearLayout>

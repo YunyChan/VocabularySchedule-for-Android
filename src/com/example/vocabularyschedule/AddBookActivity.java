@@ -2,10 +2,16 @@ package com.example.vocabularyschedule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -20,20 +26,24 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -77,8 +87,12 @@ public class AddBookActivity extends Activity{
     //步骤4
     Button btn_finish,btn_addGap,btn_undo;
     CheckBox cb_setGaps;
-    LinearLayout llyt_gaps;
-    ListView lv_gaps;
+    LinearLayout llyt_gapPages;
+    ListView lv_gapPages;
+    GapsListAdapter lv_gapPages_adapter;
+    Vector<Gap> gapPages;
+    
+  	//private Vector<Operating> operatingSequence;//-2代表新增,-1代表删除，>0代表修改
     
     
 	@Override
@@ -343,10 +357,67 @@ public class AddBookActivity extends Activity{
     	View curView=mInflater.inflate(R.layout.viewpage_item4, null);
     	btn_finish=(Button)curView.findViewById(R.id.btn_finish);
     	
-    	llyt_gaps=(LinearLayout)curView.findViewById(R.id.llyt_gaps);
+    	llyt_gapPages=(LinearLayout)curView.findViewById(R.id.llyt_gapPages);
+    	lv_gapPages=(ListView)curView.findViewById(R.id.lv_gapPages);
+    	lv_gapPages_adapter=new GapsListAdapter();		
+    	lv_gapPages.setAdapter(lv_gapPages_adapter);
+    	gapPages=new Vector<Gap>();
     	
     	btn_addGap=(Button)curView.findViewById(R.id.btn_addGap);
-    	btn_undo=(Button)curView.findViewById(R.id.btn_undo);
+    	btn_addGap.setOnClickListener(new OnClickListener() {
+    		EditText et_gapStart,et_gapEnd;
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!("".equals(et_start.getText().toString()))&&
+						!("".equals(et_end.getText().toString()))){
+		    		LayoutInflater inflater = getLayoutInflater();
+					View layout = inflater.inflate(R.layout.dialog_set_gap,(ViewGroup)findViewById(R.id.dlg_gap));
+					AlertDialog.Builder builder = new Builder(activity);
+					builder.setTitle("请输入新间隔范围");
+					builder.setIcon(android.R.drawable.ic_dialog_info);
+					et_gapStart=(EditText)layout.findViewById(R.id.et_gapStart);
+					et_gapEnd=(EditText)layout.findViewById(R.id.et_gapEnd);
+					et_gapStart.setKeyListener(new DigitsKeyListener(false,true));
+					et_gapEnd.setKeyListener(new DigitsKeyListener(false,true));
+					builder.setView(layout);
+					builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener(){
+		
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							// TODO Auto-generated method stub
+							
+							String et_gapStart_contant=et_gapStart.getText().toString();
+							String et_gapEnd_contant=et_gapEnd.getText().toString();
+							int gapStart=Integer.parseInt(et_gapStart_contant);
+							int gapEnd=Integer.parseInt(et_gapEnd_contant);
+							if (gapStart<=gapEnd) {
+								if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
+										gapEnd<=Integer.parseInt(et_end.getText().toString())) {
+									Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),Integer.parseInt(et_gapEnd_contant));								
+									if(lv_gapPages_adapter.AddNewGap(lv_gapPages_adapter.getCount(),newGap));
+										arg0.dismiss();
+								}else
+									Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_SHORT).show();
+							}else
+								Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_SHORT).show();
+						}
+						
+					});
+					builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener(){
+		
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							// TODO Auto-generated method stub
+							arg0.dismiss();
+						}
+						
+					});
+					builder.create().show();
+				}else
+					Toast.makeText(getApplicationContext(),"还没有完成背诵范围的设置",Toast.LENGTH_SHORT).show();
+			}
+		});
     	
     	cb_setGaps=(CheckBox)curView.findViewById(R.id.cb_setGaps);
     	cb_setGaps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -355,9 +426,9 @@ public class AddBookActivity extends Activity{
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked)
-					llyt_gaps.setVisibility(View.VISIBLE);
+					llyt_gapPages.setVisibility(View.VISIBLE);
 				else
-					llyt_gaps.setVisibility(View.GONE);		
+					llyt_gapPages.setVisibility(View.GONE);		
 			}
 		});
     	
@@ -393,7 +464,7 @@ public class AddBookActivity extends Activity{
         vp_addBook.setOnPageChangeListener(new MyOnPageChangeListener());
         
         rbtn_page.setChecked(true);
-        llyt_gaps.setVisibility(View.GONE);
+        llyt_gapPages.setVisibility(View.GONE);
     }
     
     DatePickerDialog.OnDateSetListener DateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -571,4 +642,194 @@ public class AddBookActivity extends Activity{
 		}
     	
     }
+    
+	class GapsListAdapter extends BaseAdapter{
+		private List<Gap> curShowList=new ArrayList<Gap>();
+		
+		public GapsListAdapter() {  
+        }
+		
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return curShowList.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return curShowList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return arg0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			ViewHolder holder;
+			if (convertView==null) {
+				String inflater=Context.LAYOUT_INFLATER_SERVICE;
+				LayoutInflater layoutInflater=(LayoutInflater)activity.getSystemService(inflater);
+				convertView=layoutInflater.inflate(R.layout.listview_gaps_item,null);
+				holder=new ViewHolder();
+				holder.tv_gapIndex=(TextView)convertView.findViewById(R.id.tv_gapIndex);
+				holder.tv_gapStart=(TextView)convertView.findViewById(R.id.tv_gapStart);
+				holder.tv_gapEnd=(TextView)convertView.findViewById(R.id.tv_gapEnd);
+				holder.ibtn_editGap=(ImageButton)convertView.findViewById(R.id.ibtn_editGap);
+				holder.ibtn_deleteGap=(ImageButton)convertView.findViewById(R.id.ibtn_deleteGap);
+				convertView.setTag(holder);
+			}else
+				holder = (ViewHolder) convertView.getTag();
+						
+			holder.tv_gapIndex.setText(String.valueOf(position+1)); 
+			holder.tv_gapStart.setText(String.valueOf(curShowList.get(position).startPos));
+			holder.tv_gapEnd.setText(String.valueOf(curShowList.get(position).endPos));
+			
+			holder.ibtn_editGap.setOnClickListener(new OnClickListener() {
+				EditText et_gapStart,et_gapEnd;
+				Gap oldGap;
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					final int position = lv_gapPages.getPositionForView(v);
+					if (position != ListView.INVALID_POSITION) {
+			            //DO THE STUFF YOU WANT TO DO WITH THE position
+						LayoutInflater inflater = getLayoutInflater();
+						View layout = inflater.inflate(R.layout.dialog_set_gap,(ViewGroup)findViewById(R.id.dlg_gap));
+						AlertDialog.Builder builder = new Builder(activity);
+						builder.setTitle("请编辑间隔范围");
+						builder.setIcon(android.R.drawable.ic_dialog_info);
+						et_gapStart=(EditText)layout.findViewById(R.id.et_gapStart);
+						et_gapEnd=(EditText)layout.findViewById(R.id.et_gapEnd);
+						oldGap=curShowList.get(position);
+						et_gapStart.setText(String.valueOf(oldGap.startPos));
+						et_gapEnd.setText(String.valueOf(oldGap.endPos));
+						et_gapStart.setKeyListener(new DigitsKeyListener(false,true));
+						et_gapEnd.setKeyListener(new DigitsKeyListener(false,true));
+						builder.setView(layout);
+						builder.setPositiveButton("确定",new android.content.DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								String et_gapStart_contant=et_gapStart.getText().toString();
+								String et_gapEnd_contant=et_gapEnd.getText().toString();
+								int gapStart=Integer.parseInt(et_gapStart_contant);
+								int gapEnd=Integer.parseInt(et_gapEnd_contant);
+								if (gapStart<=gapEnd) {
+									if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
+											gapEnd<=Integer.parseInt(et_end.getText().toString())) {
+										Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),
+												Integer.parseInt(et_gapEnd_contant));
+										if (SetGap(position,newGap))
+											dialog.dismiss();
+									}else
+										Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_SHORT).show();
+								}else
+									Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_SHORT).show();
+							}
+
+						});
+						builder.setNegativeButton("取消",new android.content.DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								dialog.dismiss();
+							}
+
+						});						
+						builder.create().show();
+			        }
+				}
+			});
+			
+			holder.ibtn_deleteGap.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					final int position = lv_gapPages.getPositionForView(v);
+					if (position != ListView.INVALID_POSITION) {
+			            //DO THE STUFF YOU WANT TO DO WITH THE position
+						RemoveGap(position);
+						gapPages.remove(position);
+			        }
+				}
+			});
+						
+			return convertView;
+		}
+		
+		public boolean AddNewGap(int position,Gap newGap) {
+			int insertIndex=GetInsertIndex(newGap);
+			if(insertIndex!=-1){
+				curShowList.add(insertIndex, newGap);
+				gapPages.add(insertIndex, newGap);
+				notifyDataSetChanged();
+				return true;
+			}
+			return false;
+		}
+		
+		public void RemoveGap(int position) {
+			curShowList.remove(position);
+			notifyDataSetChanged();
+		}
+		
+		public boolean SetGap(int position,Gap gap) {
+			Vector<Gap> tmpGapPages=(Vector<Gap>)gapPages.clone();
+			gapPages.remove(position);
+			int insertIndex=GetInsertIndex(gap);
+			if (insertIndex!=-1) {
+				curShowList.remove(position);
+				curShowList.add(insertIndex, gap);
+				gapPages.add(insertIndex, gap);
+				notifyDataSetChanged();
+				return true;
+			}else{
+				gapPages=tmpGapPages;
+				return false;
+			}
+		}
+		
+		public int GetInsertIndex(Gap gap) {
+			Iterator<Gap> gapPagesIt=gapPages.iterator();
+			int curIndex=0;
+			while (gapPagesIt.hasNext()) {
+				Gap curGap = (Gap) gapPagesIt.next();
+				if (gap.endPos<curGap.startPos) {
+					return curIndex;
+				}
+				if (gap.startPos>curGap.endPos){
+					curIndex++;
+					continue;
+				}
+				if (gap.startPos>=curGap.startPos&&gap.startPos<=curGap.endPos){
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+					return -1;
+				}
+				if (gap.endPos>=curGap.startPos&&gap.endPos<=curGap.endPos){
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+					return -1;
+				}
+				if (gap.endPos<curGap.startPos&&gap.endPos>curGap.endPos){
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+					return -1;
+				}
+			}
+			return curIndex;
+		}
+	}
+	
+	static class ViewHolder{
+		TextView tv_gapIndex;
+		TextView tv_gapStart,tv_gapEnd;
+		ImageButton ibtn_editGap;
+		ImageButton ibtn_deleteGap;
+	}
 }

@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReviewModeActivity extends Activity{	
-	ReviewModeActivity activityContext=this;
+	ReviewModeActivity activity=this;
 	private MainApp mApp;
 	
 	TextView tv_modeName;
@@ -81,10 +81,7 @@ public class ReviewModeActivity extends Activity{
 	private void InitModesSpinner(){
 		spn_modes=(Spinner)findViewById(R.id.spn_modes);
 		mApp.ResetModesSpinnerData();
-		spn_modes_adapter=new
-				ArrayAdapter<String>(activityContext,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
-		spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spn_modes.setAdapter(spn_modes_adapter);
+		SetSpinnerAdapter();
 		spn_modes.setOnItemSelectedListener(new OnItemSelectedListener() {
 			int ItemSelectedPosition;
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -92,10 +89,10 @@ public class ReviewModeActivity extends Activity{
 				// TODO Auto-generated method stub
 				ItemSelectedPosition=arg2;
 				if(operatingSequence.size()>0){
-					AlertDialog.Builder builder = new Builder(activityContext);
+					AlertDialog.Builder builder = new Builder(activity);
 					builder.setTitle("还没保存操作！");
 					builder.setIcon(android.R.drawable.ic_dialog_info);
-					TextView tv_saveWarning=new TextView(activityContext);
+					TextView tv_saveWarning=new TextView(activity);
 					tv_saveWarning.setText("确定不保存对本模式的所有操作？");
 					tv_saveWarning.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 					builder.setView(tv_saveWarning);
@@ -165,10 +162,7 @@ public class ReviewModeActivity extends Activity{
 							mApp.modes.remove(curSelectedModeId);
 							spn_modes_adapter.clear();
 							mApp.ResetModesSpinnerData();
-							spn_modes_adapter=new
-									ArrayAdapter<String>(activityContext,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
-							spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-							spn_modes.setAdapter(spn_modes_adapter);
+							SetSpinnerAdapter();
 						}else
 							Toast.makeText(getApplicationContext(),"还有"+totalSelectedBooks+"本书占用该模式",Toast.LENGTH_SHORT).show();
 					}
@@ -182,10 +176,10 @@ public class ReviewModeActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				AlertDialog.Builder builder = new Builder(activityContext);
+				AlertDialog.Builder builder = new Builder(activity);
 				builder.setTitle("模式的名字");
 				builder.setIcon(android.R.drawable.ic_dialog_info);
-				et_modeName=new EditText(activityContext);
+				et_modeName=new EditText(activity);
 				et_modeName.setText(tv_modeName.getText());
 				builder.setView(et_modeName);
 				builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener(){
@@ -199,6 +193,7 @@ public class ReviewModeActivity extends Activity{
 						int curSpinnerIndex=spn_modes.getSelectedItemPosition();
 						spn_modes_adapter.clear();
 						mApp.ResetModesSpinnerData();
+						SetSpinnerAdapter();
 						spn_modes.setSelection(curSpinnerIndex);
 						arg0.dismiss();
 					}
@@ -252,10 +247,10 @@ public class ReviewModeActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				AlertDialog.Builder builder = new Builder(activityContext);
+				AlertDialog.Builder builder = new Builder(activity);
 				builder.setTitle("第"+(lv_peroids_adapter.getCount()+1)+"周期的间隔天数");
 				builder.setIcon(android.R.drawable.ic_dialog_info);
-				et_period=new EditText(activityContext);
+				et_period=new EditText(activity);
 				et_period.setHint("请输入天数");
 				et_period.setKeyListener(new DigitsKeyListener(false,true));
 				builder.setView(et_period);
@@ -349,6 +344,13 @@ public class ReviewModeActivity extends Activity{
 		lv_peroids_adapter.SetData(curMode);
 	}
 	
+	private void SetSpinnerAdapter() {
+		spn_modes_adapter=new
+				ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,mApp.spn_modes_al);
+		spn_modes_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spn_modes.setAdapter(spn_modes_adapter);
+	}
+	
 	class ReviewModeListAdapter extends BaseAdapter{
 		private List<Integer> curShowList=new ArrayList<Integer>();
 		private ReviewMode data;
@@ -380,7 +382,7 @@ public class ReviewModeActivity extends Activity{
 			ViewHolder holder;
 			if (convertView==null) {
 				String inflater=Context.LAYOUT_INFLATER_SERVICE;
-				LayoutInflater layoutInflater=(LayoutInflater)activityContext.getSystemService(inflater);
+				LayoutInflater layoutInflater=(LayoutInflater)activity.getSystemService(inflater);
 				convertView=layoutInflater.inflate(R.layout.listview_mode_item,null);
 				holder=new ViewHolder();
 				holder.tv_peroidTime=(TextView)convertView.findViewById(R.id.tv_peroidTime);
@@ -403,10 +405,10 @@ public class ReviewModeActivity extends Activity{
 					final int position = lv_periods.getPositionForView(v);
 					if (position != ListView.INVALID_POSITION) {
 			            //DO THE STUFF YOU WANT TO DO WITH THE position
-						AlertDialog.Builder builder = new Builder(activityContext);
+						AlertDialog.Builder builder = new Builder(activity);
 						builder.setTitle("请输入周期间隔");
 						builder.setIcon(android.R.drawable.ic_dialog_info);
-						et_peroid=new EditText(activityContext);
+						et_peroid=new EditText(activity);
 						oldPeriod=curShowList.get(position);
 						et_peroid.setText(oldPeriod.toString());
 						et_peroid.setKeyListener(new DigitsKeyListener(false,true));
@@ -421,8 +423,7 @@ public class ReviewModeActivity extends Activity{
 								String et_peroid_contant=et_peroid.getText().toString();
 								Integer value=Integer.valueOf(Integer.parseInt(et_peroid_contant));
 								operating.value=value;
-								curShowList.remove(position);
-								curShowList.add(position,value);
+								SetPeriod(position,value);
 								dialog.dismiss();
 								notifyDataSetChanged();
 							}

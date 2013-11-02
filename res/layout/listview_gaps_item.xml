@@ -27,7 +27,7 @@
         android:text="1"
         android:textSize="12sp" />
     <ImageButton
-        android:id="@+id/btn_editGap"
+        android:id="@+id/ibtn_editGap"
         android:layout_width="70px"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
         android:padding="10px"
         android:src="@drawable/pen_32x32"  />
     <ImageButton
-        android:id="@+id/btn_deleteGap"
+        android:id="@+id/ibtn_deleteGap"
         android:layout_width="70px"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
