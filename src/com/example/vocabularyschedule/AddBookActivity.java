@@ -816,15 +816,15 @@ public class AddBookActivity extends Activity{
 					continue;
 				}
 				if (gap.startPos>=curGap.startPos&&gap.startPos<=curGap.endPos){
-					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_LONG).show();
 					return -1;
 				}
 				if (gap.endPos>=curGap.startPos&&gap.endPos<=curGap.endPos){
-					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_LONG).show();
 					return -1;
 				}
-				if (gap.endPos<curGap.startPos&&gap.endPos>curGap.endPos){
-					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_SHORT).show();
+				if (gap.startPos<curGap.startPos&&gap.endPos>curGap.endPos){
+					Toast.makeText(getApplicationContext(),"间隔范围设置错误，覆盖了弟"+String.valueOf(curIndex+1)+"个间隔",Toast.LENGTH_LONG).show();
 					return -1;
 				}
 			}
