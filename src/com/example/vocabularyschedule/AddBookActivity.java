@@ -52,6 +52,23 @@ public class AddBookActivity extends Activity{
 	AddBookActivity activity=this;
 	private MainApp mApp;
 	
+	//New book value
+	String newBookTitle;
+	int newBookPartUnit;
+	String newBookUnitStr;
+	int newBookPerPageAvgWords;
+	int newBookPerPartAvgPages;
+	int newBookStartPos;
+	int newBookEndPos;
+	int newBookReviewModeId;
+	int newBookMonday;
+	int newBookTuesday;
+	int newBookWednesday;
+	int newBookThursday;
+	int newBookFriday;
+	int newBookSaturday;
+	int newBookSunday;
+	
 	//滑动页面	
 	private ViewPager vp_addBook;//页卡内容
     private List<View> listViews; // Tab页面列表
@@ -77,7 +94,8 @@ public class AddBookActivity extends Activity{
     LinearLayout lly_perPartAvgPage;
     Button btn_startDate;
     Spinner spn_reviewMode;
-    private Calendar bookStartDate;
+    private Calendar newBookStartDate;
+    private boolean isSetDate;
     ArrayAdapter<String> spn_modes_adapter;
     
     //步骤3
@@ -90,7 +108,7 @@ public class AddBookActivity extends Activity{
     LinearLayout llyt_gapPages;
     ListView lv_gapPages;
     GapsListAdapter lv_gapPages_adapter;
-    Vector<Gap> gapPages;
+    Vector<Gap> newBookGapPages;
     
   	//private Vector<Operating> operatingSequence;//-2代表新增,-1代表删除，>0代表修改
     
@@ -169,7 +187,7 @@ public class AddBookActivity extends Activity{
         rg_unit3.setOnCheckedChangeListener(new
         		UnitRadioGroupOnCheckedChangeListener());
         
-        curUnitSelect=-1;
+        curUnitSelect=-1;//There is no selection.
         
         rbtn_page=(RadioButton)curView.findViewById(R.id.rbtn_page);
         rbtn_page.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -262,6 +280,7 @@ public class AddBookActivity extends Activity{
 				Log.d("vocabulary", "onCheckedChanged");
 				SetRangeUnit(et_other.getText().toString());
 				SetWeekPlanUnit(et_other.getText().toString());
+				tv_perPartAvgPages_unit.setText(et_other.getText().toString());
 			}
 			
 			@Override
@@ -301,15 +320,16 @@ public class AddBookActivity extends Activity{
     	tv_rangeStartUnit=(TextView)curView.findViewById(R.id.tv_rangeStartUnit);
     	tv_rangeEndUnit=(TextView)curView.findViewById(R.id.tv_rangeEndUnit);
     	
+    	isSetDate=false;
     	btn_startDate=(Button)curView.findViewById(R.id.btn_startDate);
     	btn_startDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				bookStartDate=Calendar.getInstance();
+				newBookStartDate=Calendar.getInstance();
 				new DatePickerDialog(activity,DateSetListener,
-						bookStartDate.get(Calendar.YEAR), bookStartDate.get(Calendar.MONTH), bookStartDate.get(Calendar.DAY_OF_MONTH)).show();
+						newBookStartDate.get(Calendar.YEAR), newBookStartDate.get(Calendar.MONTH), newBookStartDate.get(Calendar.DAY_OF_MONTH)).show();
 			}
 		});
     	
@@ -355,13 +375,12 @@ public class AddBookActivity extends Activity{
     private void InitStepFour() {
     	LayoutInflater mInflater = getLayoutInflater();
     	View curView=mInflater.inflate(R.layout.viewpage_item4, null);
-    	btn_finish=(Button)curView.findViewById(R.id.btn_finish);
     	
     	llyt_gapPages=(LinearLayout)curView.findViewById(R.id.llyt_gapPages);
     	lv_gapPages=(ListView)curView.findViewById(R.id.lv_gapPages);
     	lv_gapPages_adapter=new GapsListAdapter();		
     	lv_gapPages.setAdapter(lv_gapPages_adapter);
-    	gapPages=new Vector<Gap>();
+    	newBookGapPages=new Vector<Gap>();
     	
     	btn_addGap=(Button)curView.findViewById(R.id.btn_addGap);
     	btn_addGap.setOnClickListener(new OnClickListener() {
@@ -420,6 +439,7 @@ public class AddBookActivity extends Activity{
 				}else
 					Toast.makeText(getApplicationContext(),"还没有完成背诵范围的设置",Toast.LENGTH_SHORT).show();
 			}
+			
 		});
     	
     	cb_setGaps=(CheckBox)curView.findViewById(R.id.cb_setGaps);
@@ -436,6 +456,202 @@ public class AddBookActivity extends Activity{
 		});
     	
         listViews.add(curView);
+        
+        btn_finish=(Button)curView.findViewById(R.id.btn_finish);
+        btn_finish.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				boolean isEmpty=false;
+				String et_contant;
+				
+				if (!isEmpty) {
+					et_contant=et_bookTitle.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"词汇书名字为空！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(0);
+					}else
+					newBookTitle=et_contant;
+				}
+				
+				if (!isEmpty) {
+					switch (curUnitSelect) {
+					case -1:
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"背诵进度单位还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(0);
+						break;
+					case 0:
+						newBookPartUnit=Book.PAGE;
+						newBookUnitStr="页";
+						break;
+					case 1:
+						newBookPartUnit=Book.COST;
+						newBookUnitStr="分钟";
+						break;
+					case 2:
+						newBookPartUnit=Book.VOCABULARY;
+						newBookUnitStr="个";
+						break;
+					case 3:
+						newBookPartUnit=Book.PART;
+						newBookUnitStr="List";
+						break;
+					case 4:
+						newBookPartUnit=Book.PART;
+						newBookUnitStr="章";
+						break;
+					case 5:
+						et_contant=et_other.getText().toString();
+						if ("".equals(et_contant)) {
+							isEmpty=true;
+							Toast.makeText(getApplicationContext(),"背诵进度单位为空，请输入！",Toast.LENGTH_LONG).show();
+							vp_addBook.setCurrentItem(0);
+						}else{
+							newBookPartUnit=Book.PART;
+							newBookUnitStr=et_contant;
+						}
+						break;
+					}					
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_perPageAvgWords.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"平均每页单词数还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(1);
+					}else
+						newBookPerPageAvgWords=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty){
+					if (newBookPartUnit==3) {
+						et_contant=et_perPartAvgPages.getText().toString();
+						if ("".equals(et_contant)) {
+							isEmpty=true;
+							Toast.makeText(getApplicationContext(),"平均每"+newBookUnitStr+"页数还没设置！",Toast.LENGTH_LONG).show();
+							vp_addBook.setCurrentItem(1);
+						}else
+							newBookPerPartAvgPages=Integer.parseInt(et_contant);
+					}
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_start.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"背诵起始位置还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(1);
+					}else
+						newBookStartPos=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_end.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"背诵结束位置还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(1);
+					}else
+						newBookEndPos=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty&&isSetDate==false) {
+					isEmpty=true;
+					Toast.makeText(getApplicationContext(),"背诵起始日期还没设置！",Toast.LENGTH_SHORT).show();
+					vp_addBook.setCurrentItem(1);
+				}
+				
+				newBookReviewModeId=mApp.modesIdVec.get(spn_reviewMode.getSelectedItemPosition()).intValue();
+				
+				if (!isEmpty) {
+					et_contant=et_monday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期一的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookMonday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_tuesday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期二的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookTuesday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_wednesday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期三的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookWednesday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_thursday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期四的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookThursday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_friday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期五的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookFriday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_saturday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期六的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookSaturday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					et_contant=et_sunday.getText().toString();
+					if ("".equals(et_contant)) {
+						isEmpty=true;
+						Toast.makeText(getApplicationContext(),"星期日的进度还没设置！",Toast.LENGTH_SHORT).show();
+						vp_addBook.setCurrentItem(2);
+					}else
+						newBookSunday=Integer.parseInt(et_contant);
+				}
+				
+				if (!isEmpty) {
+					if (cb_setGaps.isChecked()) {
+						if (newBookGapPages.size()==0) {
+							isEmpty=true;
+							Toast.makeText(getApplicationContext(),"间隔页设置为空\n如果不想创建间隔页\n请去除间隔页的勾选！",Toast.LENGTH_LONG).show();
+						}
+					}
+				}
+				
+				if (isEmpty==false) {
+					Book newBook=new Book();
+				}
+			}
+			
+		});
 	}
     
     private void SetRangeUnit(String unitStr) {
@@ -475,14 +691,15 @@ public class AddBookActivity extends Activity{
 		@Override
 		public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
 			// TODO Auto-generated method stub
-			bookStartDate.set(Calendar.YEAR, arg1);
-			bookStartDate.set(Calendar.MONTH, arg2);
-			bookStartDate.set(Calendar.DAY_OF_MONTH, arg3);
+			newBookStartDate.set(Calendar.YEAR, arg1);
+			newBookStartDate.set(Calendar.MONTH, arg2);
+			newBookStartDate.set(Calendar.DAY_OF_MONTH, arg3);
 			String dateStr="";
 			dateStr+=String.valueOf(arg1)+"-";
 			dateStr+=String.valueOf(arg2+1)+"-";
 			dateStr+=String.valueOf(arg3);
 			btn_startDate.setText(dateStr);
+			isSetDate=true;
 		}
     };
     
@@ -763,7 +980,7 @@ public class AddBookActivity extends Activity{
 					if (position != ListView.INVALID_POSITION) {
 			            //DO THE STUFF YOU WANT TO DO WITH THE position
 						RemoveGap(position);
-						gapPages.remove(position);
+						newBookGapPages.remove(position);
 			        }
 				}
 			});
@@ -775,7 +992,7 @@ public class AddBookActivity extends Activity{
 			int insertIndex=GetInsertIndex(newGap);
 			if(insertIndex!=-1){
 				curShowList.add(insertIndex, newGap);
-				gapPages.add(insertIndex, newGap);
+				newBookGapPages.add(insertIndex, newGap);
 				notifyDataSetChanged();
 				return true;
 			}
@@ -788,23 +1005,23 @@ public class AddBookActivity extends Activity{
 		}
 		
 		public boolean SetGap(int position,Gap gap) {
-			Vector<Gap> tmpGapPages=(Vector<Gap>)gapPages.clone();
-			gapPages.remove(position);
+			Vector<Gap> tmpGapPages=(Vector<Gap>)newBookGapPages.clone();
+			newBookGapPages.remove(position);
 			int insertIndex=GetInsertIndex(gap);
 			if (insertIndex!=-1) {
 				curShowList.remove(position);
 				curShowList.add(insertIndex, gap);
-				gapPages.add(insertIndex, gap);
+				newBookGapPages.add(insertIndex, gap);
 				notifyDataSetChanged();
 				return true;
 			}else{
-				gapPages=tmpGapPages;
+				newBookGapPages=tmpGapPages;
 				return false;
 			}
 		}
 		
 		public int GetInsertIndex(Gap gap) {
-			Iterator<Gap> gapPagesIt=gapPages.iterator();
+			Iterator<Gap> gapPagesIt=newBookGapPages.iterator();
 			int curIndex=0;
 			while (gapPagesIt.hasNext()) {
 				Gap curGap = (Gap) gapPagesIt.next();

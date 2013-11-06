@@ -14,10 +14,10 @@ public class Book implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 2483112553973876359L;
-	int PAGE=0;
-	int COST=1;
-	int VOCABULARY=2;
-	int PART=3;
+	static int PAGE=0;
+	static int COST=1;
+	static int VOCABULARY=2;
+	static int PART=3;
 	
 	
 	int totalDays;
