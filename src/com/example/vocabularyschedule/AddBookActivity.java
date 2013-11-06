@@ -389,18 +389,21 @@ public class AddBookActivity extends Activity{
 							
 							String et_gapStart_contant=et_gapStart.getText().toString();
 							String et_gapEnd_contant=et_gapEnd.getText().toString();
-							int gapStart=Integer.parseInt(et_gapStart_contant);
-							int gapEnd=Integer.parseInt(et_gapEnd_contant);
-							if (gapStart<=gapEnd) {
-								if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
-										gapEnd<=Integer.parseInt(et_end.getText().toString())) {
-									Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),Integer.parseInt(et_gapEnd_contant));								
-									if(lv_gapPages_adapter.AddNewGap(lv_gapPages_adapter.getCount(),newGap));
-										arg0.dismiss();
+							if (!("".equals(et_gapStart_contant))&&!("".equals(et_gapEnd_contant))) {
+								int gapStart=Integer.parseInt(et_gapStart_contant);
+								int gapEnd=Integer.parseInt(et_gapEnd_contant);
+								if (gapStart<=gapEnd) {
+									if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
+											gapEnd<=Integer.parseInt(et_end.getText().toString())) {
+										Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),Integer.parseInt(et_gapEnd_contant));								
+										if(lv_gapPages_adapter.AddNewGap(lv_gapPages_adapter.getCount(),newGap));
+											arg0.dismiss();
+									}else
+										Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_LONG).show();
 								}else
-									Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_SHORT).show();
-							}else
-								Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_LONG).show();
+							}else 
+								Toast.makeText(getApplicationContext(),"输入不能为空！",Toast.LENGTH_SHORT).show();
 						}
 						
 					});
@@ -718,19 +721,22 @@ public class AddBookActivity extends Activity{
 								// TODO Auto-generated method stub
 								String et_gapStart_contant=et_gapStart.getText().toString();
 								String et_gapEnd_contant=et_gapEnd.getText().toString();
-								int gapStart=Integer.parseInt(et_gapStart_contant);
-								int gapEnd=Integer.parseInt(et_gapEnd_contant);
-								if (gapStart<=gapEnd) {
-									if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
-											gapEnd<=Integer.parseInt(et_end.getText().toString())) {
-										Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),
-												Integer.parseInt(et_gapEnd_contant));
-										if (SetGap(position,newGap))
-											dialog.dismiss();
+								if (!("".equals(et_gapStart_contant))&&!("".equals(et_gapEnd_contant))) {
+									int gapStart=Integer.parseInt(et_gapStart_contant);
+									int gapEnd=Integer.parseInt(et_gapEnd_contant);
+									if (gapStart<=gapEnd) {
+										if (gapStart>=Integer.parseInt(et_start.getText().toString())&&
+												gapEnd<=Integer.parseInt(et_end.getText().toString())) {
+											Gap newGap=new Gap(Integer.parseInt(et_gapStart_contant),
+													Integer.parseInt(et_gapEnd_contant));
+											if (SetGap(position,newGap))
+												dialog.dismiss();
+										}else
+											Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_LONG).show();
 									}else
-										Toast.makeText(getApplicationContext(),"超出了书本的背诵范围，请重设间隔范围或者背诵范围！",Toast.LENGTH_SHORT).show();
+										Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_LONG).show();
 								}else
-									Toast.makeText(getApplicationContext(),"起始范围必须小于结束范围！",Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(),"输入不能为空！",Toast.LENGTH_SHORT).show();
 							}
 
 						});
