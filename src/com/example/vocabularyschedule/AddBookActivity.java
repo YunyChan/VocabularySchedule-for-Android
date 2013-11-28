@@ -277,7 +277,6 @@ public class AddBookActivity extends Activity{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				// TODO Auto-generated method stub
-				Log.d("vocabulary", "onCheckedChanged");
 				SetRangeUnit(et_other.getText().toString());
 				SetWeekPlanUnit(et_other.getText().toString());
 				tv_perPartAvgPages_unit.setText(et_other.getText().toString());

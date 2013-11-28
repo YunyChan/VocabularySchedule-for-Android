@@ -23,6 +23,9 @@ public class MainApp extends Application{
 	ArrayList<String> spn_modes_al=new ArrayList<String>();
 	Vector<Integer> modesIdVec;//Value-ModeId
 	
+	ArrayList<String> spn_books_al=new ArrayList<String>();
+	Vector<Integer> booksIdVec;//Value-BookId
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -61,6 +64,7 @@ public class MainApp extends Application{
 		
 		modesIdVec=new Vector<Integer>();
 		ResetModesSpinnerData();
+		ResetBooksSpinnerData();
 	}
 	
 	void GetBookSchedule(int bookId){
@@ -249,6 +253,16 @@ public class MainApp extends Application{
 			ReviewMode curMode = (ReviewMode) modesEnu.nextElement();
 			spn_modes_al.add(curMode.name);
 			modesIdVec.add(Integer.valueOf(curMode.id));
+		}
+	}
+	
+	void ResetBooksSpinnerData(){
+		booksIdVec=new Vector<Integer>();
+    	Enumeration<Book> boosEnu=books.elements();
+		while (boosEnu.hasMoreElements()) {
+			Book curBook = (Book) boosEnu.nextElement();
+			spn_books_al.add(curBook.title);
+			booksIdVec.add(Integer.valueOf(curBook.id));
 		}
 	}
 }

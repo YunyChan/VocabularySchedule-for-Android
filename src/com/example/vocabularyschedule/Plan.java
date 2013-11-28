@@ -19,6 +19,10 @@ public class Plan implements Serializable{
 		return this.plan;
 	}
 	
+	void SetPlan(int plan){
+		this.plan=plan;
+	}
+	
 	int GetAutoPlan(Book book){//返回页或者单元
 		double doublePlan;
 		double doublePerPageAvgWords;
