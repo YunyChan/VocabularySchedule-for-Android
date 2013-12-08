@@ -205,7 +205,10 @@ public class ScheduleActivity extends Activity {
 			case 4://复习模式管理
 				startActivity(new Intent(mClass, ReviewModeActivity.class));
 				break;
-			case 5://系统设置
+			case 5://同步设置
+				startActivity(new Intent(mClass, SynSettingActivity.class));
+				break;
+			case 6://系统设置
 				startActivity(new Intent(mClass, PrefsActivity.class));
 				break;
 			default:

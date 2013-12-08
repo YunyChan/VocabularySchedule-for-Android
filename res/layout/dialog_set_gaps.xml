@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llyt_gaps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:padding="10px"
+		android:text="说明：设置词汇书在背诵范围内，应该去除的间隔页。这是用于生成更准确的计划表和统计信息，并不是必填项。"
+		android:textSize="12sp" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+		<TextView
+			android:layout_width="50px"
+			android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="序号"/>
+	    <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:layout_weight="1"
+	        android:text="起始" />
+	    <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="center"
+	        android:text="结束" />
+	    <TextView
+	        android:layout_width="140px"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="操作 " />
+	</LinearLayout>    
+	<ListView 
+		android:id="@+id/lv_gapPages"
+		android:layout_width="match_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"/>
+	<Button
+		android:id="@+id/btn_addGap"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="添加间隔" 
+		android:drawableLeft="@drawable/plus_32x32"
+		android:textSize="15sp"
+		android:background="#00000000"/>	
+</LinearLayout>
